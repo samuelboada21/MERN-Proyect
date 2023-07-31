@@ -1,6 +1,10 @@
 import { createContext, useContext, useState } from "react";
 import PropTypes from "prop-types";
-import { createTaskRequest, getTasksRequest } from "../api/tasks.js";
+import {
+  createTaskRequest,
+  getTasksRequest,
+  deleteTaskRequest,
+} from "../api/tasks.js";
 
 const TaskContext = createContext();
 
@@ -20,7 +24,7 @@ export function TaskProvider({ children }) {
     try {
       setTasks(res.data);
     } catch (error) {
-        console.log(error);
+      console.log(error);
     }
   };
 
@@ -29,8 +33,18 @@ export function TaskProvider({ children }) {
     console.log(res);
   };
 
+  const deleteTask = async (id) => {
+    try {
+      const res = await deleteTaskRequest(id);
+      console.log(res);
+      if (res.status === 204) setTasks(tasks.filter((task) => task._id !== id));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
-    <TaskContext.Provider value={{ tasks, createTask, getTasks }}>
+    <TaskContext.Provider value={{ tasks, createTask, getTasks, deleteTask }}>
       {children}
     </TaskContext.Provider>
   );
