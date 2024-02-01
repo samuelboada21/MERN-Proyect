@@ -22,7 +22,7 @@ function LoginPage() {
 
   return (
     <div className="flex items-center justify-center h-[calc(100vh-200px)]">
-      <div className="bg-zinc-800 max-w-md w-full p-10 rounded-md">
+      <div className="bg-zinc-800 max-w-md w-full p-10 rounded-md shadow-lg shadow-purple-500/40">
         <h1 className="text-2xl font-bold">Login</h1>
         {signinErrors.map((error, i) => (
           <div className="bg-red-500 p-2 text-white" key={i}>
