@@ -1,32 +1,52 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 // import { logoutRequest } from "../api/auth";
 
 function Navbar() {
+  const navigate = useNavigate();
+
   const { isAuthenticated, logout, user } = useAuth();
+  const buttonClass =
+    "bg-gradient-to-b from-fuchsia-600 to-purple-500 hover:from-yellow-600 hover:to-pink-400 py-1.5 rounded-sm  text-white";
+
   return (
-    <nav className="bg-zinc-700 my-3 flex justify-between py-5 px-10 rounded-lg">
-      <Link to="/">
+    <nav className="bg-zinc-700 my-3 sm:flex items-center justify-between py-5 px-10 rounded-lg">
+      <Link to={isAuthenticated ? "/tasks" : "/"}>
         <h1 className="text-2xl font-bold">Tasks Manager</h1>
       </Link>
-      <ul className="flex gap-x-2">
+      <ul className="sm:flex gap-x-2 items-center">
         {isAuthenticated ? (
           <>
-            <li>Welcome {user.username}</li>
-            <li>
-              <Link to="/add-task" className="bg-indigo-500 px-4 py-1 rounded-sm">Add Task</Link>  
+            <li className="sm:pt-0 pt-2 font-semibold  text-white">Welcome {user.username}</li>
+            <li className="sm:py-0 py-5">
+              <button
+                className={`${buttonClass} px-4 whitespace-nowrap`}
+                onClick={() => navigate("/add-task")}
+              >
+                Add Task
+              </button>
             </li>
             <li>
-              <Link to="/" onClick={()=> {logout()}} className="bg-red-600 px-4 py-1 rounded-sm">Logout</Link>
+              <button onClick={() =>{
+                logout();
+              }}
+                className={`${buttonClass} px-5`}
+              >
+                Logout
+              </button>
             </li>
           </>
         ) : (
           <>
-            <li>
-              <Link to="/login" className="bg-indigo-500 px-4 py-1 rounded-sm">Login</Link>
+            <li className="sm:py-0 py-5">
+              <Link to="/login" className={`${buttonClass} px-6 `}>
+                Login
+              </Link>
             </li>
             <li>
-              <Link to="/register" className="bg-indigo-500 px-4 py-1 rounded-sm">Register</Link>
+              <Link to="/register" className={`${buttonClass} px-4`}>
+                Register
+              </Link>
             </li>
           </>
         )}
