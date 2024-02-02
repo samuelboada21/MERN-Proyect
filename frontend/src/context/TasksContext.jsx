@@ -25,13 +25,18 @@ export function TaskProvider({ children }) {
   const getTasks = async () => {
     try {
       const res = await getTasksRequest();
-      if (Array.isArray(res.data)) {
-        setTasks([...res.data]);
+
+      if (res && res.data) {
+        if (Array.isArray(res.data)) {
+          setTasks([...res.data]);
+        } else {
+          console.error("Error: Response data is not an array");
+        }
       } else {
-        console.error("Error: Response data is not an array");
+        console.error("Error: Response or response data is missing");
       }
     } catch (error) {
-      console.log(error);
+      console.error("Error fetching tasks:", error);
     }
   };
 
