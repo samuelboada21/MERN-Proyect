@@ -20,7 +20,7 @@ function TasksPage() {
     fetchData();
   }, [getTasks]);
 
-  if (tasks.length === 0) return <h1>No tasks</h1>;
+  if (!tasks || tasks.length === 0) return <h1>No tasks</h1>;
 
   return (
     <div className="sm:grid sm:grid-cols-2 md:grid-cols-3 gap-4 mb-32 mt-8">
