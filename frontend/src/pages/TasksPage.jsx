@@ -18,7 +18,7 @@ function TasksPage() {
     };
 
     fetchData();
-  }, [getTasks]);
+  },[]);
 
   if (!tasks || tasks.length === 0) return <h1>No tasks</h1>;
 
