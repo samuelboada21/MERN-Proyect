@@ -30,7 +30,7 @@ export function TaskProvider({ children }) {
         if (Array.isArray(res.data)) {
           setTasks([...res.data]);
         } else {
-          console.error("Error: Response data is not an array");
+          console.error("Error: Response data is not an array",res, res.data);
         }
       } else {
         console.error("Error: Response or response data is missing");
