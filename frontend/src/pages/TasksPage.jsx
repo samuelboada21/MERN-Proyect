@@ -7,10 +7,10 @@ function TasksPage() {
   const [tasks, setTasks] = useState([]);
 
   useEffect(() => {
-    // Hacemos la función getTasks asíncrona
     const fetchData = async () => {
       try {
-        const tasksData = await getTasks();
+        const response = await getTasks();
+        const tasksData = response.data;
         setTasks(tasksData);
       } catch (error) {
         console.error("Error fetching tasks:", error);
@@ -18,7 +18,7 @@ function TasksPage() {
     };
 
     fetchData();
-  },[]);
+  }, [getTasks]);
 
   if (!tasks || tasks.length === 0) return <h1>No tasks</h1>;
 

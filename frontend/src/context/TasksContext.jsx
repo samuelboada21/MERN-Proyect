@@ -25,12 +25,15 @@ export function TaskProvider({ children }) {
   const getTasks = async () => {
     try {
       const res = await getTasksRequest();
-      setTasks([...res.data]);
+      if (Array.isArray(res.data)) {
+        setTasks([...res.data]);
+      } else {
+        console.error("Error: Response data is not an array");
+      }
     } catch (error) {
       console.log(error);
     }
   };
-  
 
   const createTask = async (task) => {
     const res = await createTaskRequest(task);
@@ -58,12 +61,12 @@ export function TaskProvider({ children }) {
 
   const updateTask = async (id, task) => {
     try {
-      await updateTaskRequest(id,task);
+      await updateTaskRequest(id, task);
       // return res.data;
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 
   return (
     <TaskContext.Provider
