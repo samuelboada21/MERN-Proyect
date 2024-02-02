@@ -27,7 +27,7 @@ function TaskCard({ task }) {
         <Link
             to={`/task-details/${task._id}`}
             className="
-            bg-gradient-to-b from-purple-500 to-violet-700 hover:from-purple-600 hover:to-violet-800
+            bg-gradient-to-b from-purple-400 to-violet-500 hover:from-purple-400 hover:to-violet-600
             text-white
             px-4
             py-2
@@ -36,7 +36,7 @@ function TaskCard({ task }) {
             View
           </Link>
           <button
-            className="bg-gradient-to-b from-pink-500 to-red-600 hover:from-pink-600 hover:to-red-700 text-white px-4 py-2 rounded-md"
+            className="bg-gradient-to-b from-pink-400 to-red-500 hover:from-pink-500 hover:to-red-600 text-white px-4 py-2 rounded-md"
             onClick={() => {
               deleteTask(task._id);
             }}
@@ -46,7 +46,7 @@ function TaskCard({ task }) {
           <Link
             to={`/tasks/${task._id}`}
             className="
-            bg-gradient-to-b from-cyan-400 to-blue-600 hover:from-cyan-500 hover:to-blue-700
+            bg-gradient-to-b from-cyan-400 to-blue-500 hover:from-cyan-500 hover:to-blue-600
             text-white
             px-4
             py-2
