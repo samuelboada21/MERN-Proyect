@@ -90,7 +90,13 @@ export const verifyToken = async (req,res) => {
   const {token} = req.cookies;
   if(!token) return res.status(401).json({message: "Unauthorized"});
   jwt.verify(token, TOKEN_SECRET, async (err, user) => {
-    if(err) return res.status(401).json({message: "Unauthorized"});
+    if (err) {
+      if (err.name === 'TokenExpiredError') {
+        return res.status(401).json({ message: 'Token expired' });
+      } else {
+        return res.status(401).json({ message: 'Unauthorized' });
+      }
+    }
 
     const userFound = await User.findById(user.id)
     if(!userFound) return res.status(404).json({message: "User not found"});

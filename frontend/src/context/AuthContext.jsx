@@ -33,15 +33,29 @@ export const AuthProvider = ({ children }) => {
   const signin = async (user) => {
     try {
       const res = await loginRequest(user);
-      setIsAuthenticated(true);
-      setUser(res.data);
-    } catch (error) {
-      if (Array.isArray(error.response.data)) {
-        return setErrors(error.response.data);
+  
+      if (res && res.data) {
+        setIsAuthenticated(true);
+        setUser(res.data);
+      } else {
+        console.error("Error: Unexpected response format", res);
+        setErrors(["Unexpected response format"]);
       }
-      setErrors([error.response.data.message]);
+    } catch (error) {
+      if (error.response && error.response.data) {
+        if (Array.isArray(error.response.data)) {
+          setErrors(error.response.data);
+        } else {
+          console.error("Error: Unexpected response format", error.response.data);
+          setErrors(["Unexpected response format"]);
+        }
+      } else {
+        console.error("Error fetching tasks:", error);
+        setErrors(["An error occurred while fetching tasks"]);
+      }
     }
   };
+  
 
   const logout = () => {
     Cookies.remove("token");
