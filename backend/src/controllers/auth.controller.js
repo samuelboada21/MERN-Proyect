@@ -19,7 +19,12 @@ export const register = async (req, res) => {
     const userSaved = await newUser.save();
     const token = await createAccessToken({ id: userSaved._id });
 
-    res.cookie("token", token);
+    // res.cookie("token", token);
+    res.cookie("token", token, {
+      httpOnly: true,
+      sameSite: "None",
+      secure: process.env.NODE_ENV === "production",
+    });
     // res.json({
     //   message: "User created successfully",
     // });
@@ -37,7 +42,6 @@ export const register = async (req, res) => {
 
 export const login = async (req, res) => {
     const { email, password, } = req.body;
-    // User.create({email: email, password: password}); // crear un usuario pero no es lo mas optimo
     try {
       const userFound = await User.findOne({email})
 
@@ -49,10 +53,13 @@ export const login = async (req, res) => {
 
       const token = await createAccessToken({ id: userFound._id });
   
-      res.cookie("token", token);
-      // res.json({
-      //   message: "User created successfully",
-      // });
+      // res.cookie("token", token);
+      res.cookie("token", token, {
+        httpOnly: true,
+        sameSite: "None",
+        secure: process.env.NODE_ENV === "production",
+      });
+
       res.json({
         id: userFound._id,
         username: userFound.username,
