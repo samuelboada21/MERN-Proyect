@@ -37,6 +37,7 @@ export const AuthProvider = ({ children }) => {
       if (res && res.data) {
         setIsAuthenticated(true);
         setUser(res.data);
+        Cookies.set("token", res.data.token);
       } else {
         console.error("Error: Unexpected response format", res);
         setErrors(["Unexpected response format"]);
